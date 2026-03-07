@@ -4,4 +4,14 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: zmkfirmware/zmk-config-workflow/.github/workflows/build-summary.yml@main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build ZMK
+        uses: zmkfirmware/zmk-actions-unified@main
+        with:
+          args: --board seeeduino_xiao_ble --shield totem_left
