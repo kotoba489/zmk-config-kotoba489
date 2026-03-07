@@ -1,8 +1,7 @@
-name: Build ZMK firmware
+name: Build
+
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
-    with:
-          fetch-depth: 0    # 履歴をすべて取得して構成を正しく認識させる
+    uses: zmkfirmware/zmk-config-workflow/.github/workflows/build-summary.yml@main
