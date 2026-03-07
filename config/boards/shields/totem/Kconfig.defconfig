@@ -1,0 +1,6 @@
+if SHIELD_TOTEM_LEFT || SHIELD_TOTEM_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "TOTEM"
+
+endif
