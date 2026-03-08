@@ -23,19 +23,17 @@
         wakeup-source;
         diode-direction = "col2row";
         
-        /* 基板図の ROW0〜ROW3 (XIAOピン1,2,3,4) に対応 */
         row-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* 基板図の COL0〜COL4 (XIAOピン5,6,10,9,8) に、残りの予備ピン(7,11)を追加して10列分を確保 */
         col-gpios = <&xiao_d 4 GPIO_ACTIVE_HIGH>,
                     <&xiao_d 5 GPIO_ACTIVE_HIGH>,
+                    <&xiao_d 10 GPIO_ACTIVE_HIGH>,
                     <&xiao_d 9 GPIO_ACTIVE_HIGH>,
                     <&xiao_d 8 GPIO_ACTIVE_HIGH>,
                     <&xiao_d 7 GPIO_ACTIVE_HIGH>,
-                    <&xiao_d 10 GPIO_ACTIVE_HIGH>,
                     <&xiao_d 6 GPIO_ACTIVE_HIGH>;
     };
 };
