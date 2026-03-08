@@ -33,21 +33,27 @@ jobs:
       - name: West Zephyr export
         run: west zephyr-export
 
-      # 1. Left側のビルド
+      # 1. Left側のビルド（ビルド前にフォルダを削除して確実にリセット）
       - name: West Build (Left)
-        run: west build -Pr -b xiao_ble -- -DSHIELD=k_grid_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" zmk/app
+        run: |
+          rm -rf build
+          west build -Pr -b xiao_ble -- -DSHIELD=k_grid_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" zmk/app
       - name: Rename Left UF2
         run: cp build/zephyr/zmk.uf2 k_grid_left.uf2
 
       # 2. Right側のビルド
       - name: West Build (Right)
-        run: west build -Pr -b xiao_ble -- -DSHIELD=k_grid_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" zmk/app
+        run: |
+          rm -rf build
+          west build -Pr -b xiao_ble -- -DSHIELD=k_grid_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" zmk/app
       - name: Rename Right UF2
         run: cp build/zephyr/zmk.uf2 k_grid_right.uf2
 
       # 3. Settings Resetのビルド
       - name: West Build (Settings Reset)
-        run: west build -Pr -b xiao_ble -- -DSHIELD=settings_reset -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" zmk/app
+        run: |
+          rm -rf build
+          west build -Pr -b xiao_ble -- -DSHIELD=settings_reset -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" zmk/app
       - name: Rename Reset UF2
         run: cp build/zephyr/zmk.uf2 settings_reset.uf2
 
