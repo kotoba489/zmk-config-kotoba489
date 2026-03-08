@@ -14,27 +14,31 @@ jobs:
         run: |
           west init -l .
           west update
-          # SDKの場所をDocker内の正しいパス (/opt/zephyr-sdk) に完全に固定
-          echo "ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk" >> $GITHUB_ENV
 
-      - name: Build Firmware (Final)
+      - name: Build Firmware (Absolute Environment)
         run: |
-          # 1. 以前成功したパスを再利用
+          # 1. 前回のログで確定したパスを直接利用
           APP_PATH="/__w/zmk-config-kotoba489/zmk/app"
+          ZEPHYR_PATH="/__w/zmk-config-kotoba489/zephyr"
           
-          # 2. 左手ビルド (SDKのパスをcmakeに直接渡す)
+          # 2. Zephyrの環境をエクスポート
+          west zephyr-export
+          
+          # 3. 左手ビルド (全てのパスを引数として直接渡します)
           west build -s "$APP_PATH" -b xiao_ble -- \
             -DSHIELD=totem_left \
             -DZMK_CONFIG="$GITHUB_WORKSPACE/config" \
+            -DZephyr_DIR="$ZEPHYR_PATH/share/zephyr-package/cmake" \
             -DZephyr-sdk_DIR=/opt/zephyr-sdk/cmake
 
           cp build/zephyr/zmk.uf2 ./totem_left.uf2
           
-          # 3. 右手ビルド
+          # 4. 右手ビルド
           rm -rf build
           west build -s "$APP_PATH" -b xiao_ble -- \
             -DSHIELD=totem_right \
             -DZMK_CONFIG="$GITHUB_WORKSPACE/config" \
+            -DZephyr_DIR="$ZEPHYR_PATH/share/zephyr-package/cmake" \
             -DZephyr-sdk_DIR=/opt/zephyr-sdk/cmake
 
           cp build/zephyr/zmk.uf2 ./totem_right.uf2
