@@ -12,11 +12,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: West Init
-        # 強制的に現在のディレクトリで初期化し、ZMKソースを呼び出す準備をします
-        run: west init -l .
+        run: west init -l config
 
       - name: West Update
-        # ここで zmk/app フォルダが作成されます。失敗を防ぐため確実に実行します
         run: west update
 
       - name: West Zephyr export
