@@ -10,40 +10,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Initialize workspace (west init)
-        # フォルダを指定して初期化します
-        run: west init -l .
-
-      - name: Update modules (west update)
-        run: west update
+      - name: Force Clone ZMK Main (確実な方法)
+        # west update に頼らず、ZMK公式リポジトリを直接持ってきます
+        run: |
+          git clone https://github.com/zmkfirmware/zmk.git zmk_core
+          cd zmk_core
+          west init -l app/
+          west update
 
       - name: Export Zephyr env
         run: west zephyr-export
 
       - name: Build Firmware
         run: |
-          # west.yml の設定に関わらず、ZMK本体の CMakeLists.txt がある場所を特定
-          # 通常は zmk/app か app です
-          if [ -f "zmk/app/CMakeLists.txt" ]; then
-            APP_PATH="zmk/app"
-          elif [ -f "app/CMakeLists.txt" ]; then
-            APP_PATH="app"
-          else
-            # 執念で CMakeLists.txt を探し出します
-            APP_PATH=$(find . -path "*/app/CMakeLists.txt" | sed 's/\/CMakeLists.txt//' | head -n 1)
-          fi
-
-          echo "Found CMakeLists.txt at: $APP_PATH"
-
-          if [ -z "$APP_PATH" ]; then
-            echo "ERROR: Could not find ZMK app directory."
-            exit 1
-          fi
-
+          # 確実に存在する zmk_core/app を指定
+          APP_PATH="zmk_core/app"
+          
+          echo "Using APP_PATH: $APP_PATH"
+          
           # 左手ビルド
           west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
           cp build/zephyr/zmk.uf2 totem_left.uf2
-
+          
           # 右手ビルド
           rm -rf build
           west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
