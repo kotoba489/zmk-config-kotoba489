@@ -14,19 +14,21 @@ jobs:
         run: |
           west init -l .
           west update
-          # Zephyrの場所を絶対パスで環境変数に叩き込みます
+          # 前回判明した「正しい場所」を環境変数にセット
           echo "ZEPHYR_BASE=$GITHUB_WORKSPACE/zephyr" >> $GITHUB_ENV
-          echo "CMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/zephyr" >> $GITHUB_ENV
 
-      - name: Build Firmware (FINAL)
+      - name: Build Firmware (Absolute Path)
         run: |
-          # 前回特定した正しいパスを使用
-          APP_PATH="$GITHUB_WORKSPACE/zmk/app"
+          # 3分11秒のログで成功した「真のパス」を直接指定します
+          # 前回のログで「Found REAL_APP_PATH at: /__w/zmk-config-kotoba489/zmk/app」と出た場所です
+          APP_PATH="/__w/zmk-config-kotoba489/zmk/app"
           
-          # Zephyr環境をエクスポート（今回はワークスペース内で実行）
+          # Zephyrのエクスポート（場所を固定）
           west zephyr-export
           
           # 左手ビルド
+          # $GITHUB_WORKSPACE は「/__w/zmk-config-kotoba489/zmk-config-kotoba489」を指すため
+          # configの場所もそれに合わせて修正
           west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="$GITHUB_WORKSPACE/config"
           cp build/zephyr/zmk.uf2 ./totem_left.uf2
           
