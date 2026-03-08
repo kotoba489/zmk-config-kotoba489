@@ -11,11 +11,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Initialize workspace (west init)
-        # 確実にカレントディレクトリをワークスペースにします
+        # フォルダを指定して初期化します
         run: west init -l .
 
       - name: Update modules (west update)
-        # ここでZMK本体が 'zmk' フォルダにダウンロードされます
         run: west update
 
       - name: Export Zephyr env
@@ -23,26 +22,31 @@ jobs:
 
       - name: Build Firmware
         run: |
-          # ZMKの構造上、本体は通常 'zmk/app' に展開されます。
-          # もしそこになければ、直接 'app' を探します。
-          if [ -d "zmk/app" ]; then
-            TARGET_PATH="zmk/app"
-          elif [ -d "app" ]; then
-            TARGET_PATH="app"
+          # west.yml の設定に関わらず、ZMK本体の CMakeLists.txt がある場所を特定
+          # 通常は zmk/app か app です
+          if [ -f "zmk/app/CMakeLists.txt" ]; then
+            APP_PATH="zmk/app"
+          elif [ -f "app/CMakeLists.txt" ]; then
+            APP_PATH="app"
           else
-            # 最終手段：システム全体からappフォルダを探し出す
-            TARGET_PATH=$(find . -name "app" -type d -print -quit)
+            # 執念で CMakeLists.txt を探し出します
+            APP_PATH=$(find . -path "*/app/CMakeLists.txt" | sed 's/\/CMakeLists.txt//' | head -n 1)
           fi
-          
-          echo "Determined TARGET_PATH: $TARGET_PATH"
-          
-          # 左手のビルド
-          west build -s "$TARGET_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+
+          echo "Found CMakeLists.txt at: $APP_PATH"
+
+          if [ -z "$APP_PATH" ]; then
+            echo "ERROR: Could not find ZMK app directory."
+            exit 1
+          fi
+
+          # 左手ビルド
+          west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
           cp build/zephyr/zmk.uf2 totem_left.uf2
-          
-          # 右手のビルド（buildフォルダを一旦消す）
+
+          # 右手ビルド
           rm -rf build
-          west build -s "$TARGET_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
           cp build/zephyr/zmk.uf2 totem_right.uf2
 
       - name: Archive artifacts
