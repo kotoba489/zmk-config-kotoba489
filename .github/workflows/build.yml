@@ -4,12 +4,15 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      # ZMK公式のビルド環境（west等が含まれています）を使用
+      image: zmkfirmware/zmk-build-arm:stable
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 # v3からv4へ更新
+        uses: actions/checkout@v4
 
       - name: Cache west modules
-        uses: actions/cache@v4 # v3からv4へ更新
+        uses: actions/cache@v4
         with:
           path: |
             modules/
@@ -37,11 +40,7 @@ jobs:
         run: west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Archive artifacts
-        uses: actions/upload-artifact@v4 # ここがエラーの原因。v3からv4へ更新
+        uses: actions/upload-artifact@v4
         with:
           name: totem_firmware
-          path: |
-            build/zephyr/zmk.uf2
-            # 左右別々に保存したい場合は以下のように指定
-            # build/zephyr/left_zmk.uf2
-            # build/zephyr/right_zmk.uf2
+          path: build/zephyr/zmk.uf2
