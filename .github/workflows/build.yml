@@ -10,31 +10,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Force Clone ZMK Main (確実な方法)
-        # west update に頼らず、ZMK公式リポジトリを直接持ってきます
+      - name: Initialize and Update (Force)
         run: |
-          git clone https://github.com/zmkfirmware/zmk.git zmk_core
-          cd zmk_core
-          west init -l app/
+          # 1. ワークスペースの初期化（ルートに west.yml がある前提）
+          west init -l .
+          # 2. 依存関係のダウンロード（ここで数分かかります）
           west update
-
-      - name: Export Zephyr env
-        run: west zephyr-export
+          # 3. 環境変数の強制設定（zephyr-exportの代わり）
+          echo "ZEPHYR_BASE=$(pwd)/zephyr" >> $GITHUB_ENV
 
       - name: Build Firmware
         run: |
-          # 確実に存在する zmk_core/app を指定
-          APP_PATH="zmk_core/app"
-          
-          echo "Using APP_PATH: $APP_PATH"
-          
-          # 左手ビルド
-          west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          # 4. 左手版のビルド（パスを zmk/app に固定）
+          west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
           cp build/zephyr/zmk.uf2 totem_left.uf2
           
-          # 右手ビルド
+          # 5. 右手版のビルド
           rm -rf build
-          west build -s "$APP_PATH" -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
           cp build/zephyr/zmk.uf2 totem_right.uf2
 
       - name: Archive artifacts
