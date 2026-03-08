@@ -1,0 +1,6 @@
+if SHIELD_K_GRID_LEFT || SHIELD_K_GRID_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "k_grid"
+
+endif
