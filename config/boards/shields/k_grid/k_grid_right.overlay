@@ -6,10 +6,10 @@
 
 &kscan0 {
     col-gpios
-        = <&xiao_d 8 GPIO_ACTIVE_HIGH> // COL4_R を ZMKのCOL0として扱う
+        = <&xiao_d 8 GPIO_ACTIVE_HIGH>
         , <&xiao_d 9 GPIO_ACTIVE_HIGH>
         , <&xiao_d 10 GPIO_ACTIVE_HIGH>
         , <&xiao_d 5 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 4 GPIO_ACTIVE_HIGH> // COL0_R を ZMKのCOL4として扱う
+        , <&xiao_d 4 GPIO_ACTIVE_HIGH>
         ;
 };
