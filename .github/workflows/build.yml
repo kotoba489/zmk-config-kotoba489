@@ -4,5 +4,13 @@ jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     with:
-      board: seeeduino_xiao_ble
-      shield_list: "k_grid_left k_grid_right"
+      build_matrix_path: ".github/workflows/build.yml"
+      config_path: "config"
+
+# ここから下がビルドの対象（行列）の指定です
+      build_matrix: |
+        include:
+          - board: seeeduino_xiao_ble
+            shield: k_grid_left
+          - board: seeeduino_xiao_ble
+            shield: k_grid_right
