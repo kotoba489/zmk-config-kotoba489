@@ -21,10 +21,12 @@ jobs:
         run: west zephyr-export
 
       - name: Build Left
-        run: west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=k_grid_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+        # ボード名を seeeduino_xiao_ble_nrf52840 に修正
+        run: west build -s zmk/app -b seeeduino_xiao_ble_nrf52840 -- -DSHIELD=k_grid_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Build Right
-        run: west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=k_grid_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+        # こちらも同様に修正
+        run: west build -s zmk/app -b seeeduino_xiao_ble_nrf52840 -- -DSHIELD=k_grid_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
