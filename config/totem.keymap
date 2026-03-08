@@ -9,12 +9,12 @@
 
         default_layer {
             display-name = "Base";
-            /* 10列 × 4行 ＝ 合計40キーを定義します */
+            /* 10列 × 4行 ＝ 合計40キーを定義 */
             bindings = <
                 &kp Q    &kp W    &kp E    &kp R    &kp T      &kp Y    &kp U    &kp I    &kp O    &kp P
                 &kp A    &kp S    &kp D    &kp F    &kp G      &kp H    &kp J    &kp K    &kp L    &kp SEMI
                 &kp Z    &kp X    &kp C    &kp V    &kp B      &kp N    &kp M    &kp COMMA &kp DOT &kp SLASH
-                &kp ESC  &kp LALT &kp LGUI &kp LSHFT &kp SPACE &kp ENTER &kp RSHFT &kp RGUI &kp BACKSPACE &kp RCTRL
+                &kp LCTL &kp LALT &kp LGUI &kp LSHFT &kp SPACE &kp ENTER &kp RSHFT &kp RGUI &kp RALT &kp RCTRL
             >;
         };
     };
