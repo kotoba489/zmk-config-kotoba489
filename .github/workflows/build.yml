@@ -15,13 +15,22 @@ jobs:
       - name: West Zephyr export
         run: west zephyr-export
       - name: Build Left
-        run: west build -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+        run: |
+          if [ -d "zmk/app" ]; then
+            west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          else
+            west build -s app -b seeeduino_xiao_ble -- -DSHIELD=totem_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          fi
       - name: Copy Left UF2
         run: cp build/zephyr/zmk.uf2 totem_left.uf2
       - name: Build Right
         run: |
           rm -rf build
-          west build -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          if [ -d "zmk/app" ]; then
+            west build -s zmk/app -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          else
+            west build -s app -b seeeduino_xiao_ble -- -DSHIELD=totem_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          fi
       - name: Copy Right UF2
         run: cp build/zephyr/zmk.uf2 totem_right.uf2
       - name: Upload artifacts
