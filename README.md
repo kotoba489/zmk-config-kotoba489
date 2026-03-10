@@ -3,7 +3,8 @@
 
 
 
-
+<img width="822" height="379" alt="スクリーンショット 2026-03-10 16 40 48" src="https://github.com/user-attachments/assets/2cb116be-fa15-45e2-89f8-d56abd7396a7" />
+大西配列をアレンジしたキーマッピングを活用
 
 
 
