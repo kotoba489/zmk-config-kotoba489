@@ -11,7 +11,7 @@
 
 
 
-### ⌨️ 自作キーボード「k_grid」設定状況まとめ
+## ⌨️ 自作キーボード「k_grid」設定状況まとめ
 ### 🛠️ Current Configuration (2026-03-10)
 
 ### 📂 Branch Strategy
