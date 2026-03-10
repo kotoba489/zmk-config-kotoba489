@@ -1,3 +1,12 @@
+
+![9781](https://github.com/user-attachments/assets/54759a3c-7319-43e7-aba9-fd5d6a509fe8)
+
+
+
+
+
+
+
 # ⌨️ 自作キーボード「k_grid」設定状況まとめ
 ## 🛠️ Current Configuration (2026-03-10)
 
