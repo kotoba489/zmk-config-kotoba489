@@ -1,5 +1,22 @@
 # ⌨️ 自作キーボード「k_grid」設定状況まとめ
+## 🛠️ Current Configuration (2026-03-10)
 
+### 📂 Branch Strategy
+- **main**: 安定版（10列構成・黄金のバックアップ）
+- **v2fromsub0309**: 実験版（左右セパレート表示 & ブートローダーキー実装）
+- **sub0309**: 復旧用アーカイブ
+
+### ✨ Special Features
+- **Split Layout**: `k_grid.json` の調整により、中央に1列分のスペースを配置。
+- **Software Bootloader**: 
+  - **Left**: Layer 1 + Row 3, Far Left
+  - **Right**: Layer 1 + Row 3, Far Right
+  - *Note: USB接続時に1回押すだけで書き込みモードに移行可能。*
+
+### 🔨 Hardware Mod
+- **Weight**: 内部に鉛板を追加。
+- **Damping**: ポロンシートによる消音加工。
+- **Keycaps**: Chocfox LAK (Low Profile)
 > 最終更新: 2026-03-09 07:00
 
 ---
