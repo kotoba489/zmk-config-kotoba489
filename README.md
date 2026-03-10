@@ -7,8 +7,8 @@
 
 
 
-# ⌨️ 自作キーボード「k_grid」設定状況まとめ
-## 🛠️ Current Configuration (2026-03-10)
+##⌨️ 自作キーボード「k_grid」設定状況まとめ
+### 🛠️ Current Configuration (2026-03-10)
 
 ### 📂 Branch Strategy
 - **main**: 安定版（10列構成・黄金のバックアップ）
