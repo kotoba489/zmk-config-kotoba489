@@ -9,3 +9,8 @@
         , <&xiao_d 8 GPIO_ACTIVE_HIGH>
         ;
 };
+
+/* 左手側のエンコーダーを有効化 */
+&left_encoder {
+    status = "okay";
+};
