@@ -2,8 +2,7 @@
 
 ## 大西配列をアレンジしたキーマッピングを活用
 
-
-https://github.com/kotoba489/zmk-kgrid20/issues/11#issue-4089289735
+![kg20km.png](https://github.com/kotoba489/zmk-kgrid20/issues/11#issue-4089289735)
 
 ## ⌨️ 自作キーボード「k_grid」設定状況まとめ
 ### 🛠️ Current Configuration (2026-03-10)
