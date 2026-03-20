@@ -4,6 +4,7 @@
 
 / {
     // 【追加】エンコーダーの物理定義をここに直接記述
+
     left_encoder: encoder_left {
         compatible = "alps,ec11";
         #sensor-cells = <0>;
@@ -35,26 +36,28 @@
         default_layer {
             display-name = "Base";
             bindings = <
-&kp LS(LG(N4))  &kp D      &kp E              &kp U     &kp COMMA  &kp H      &kp S      &kp Y          &kp R          &kp B
-&kp Z           &kp J      &kp I              &kp A     &kp O      &kp K      &kp N      &kp T          &kp W          &kp P
-&kp Q           &kp X      &kp C              &kp V     &kp COMMA  &kp G      &kp M      &kp F          &kp MINUS      &kp L
-&mo 1           &kp LSHFT  &kp LA(LC(SPACE))  &kp LGUI  &kp SPACE  &kp SPACE  &kp ENTER  &kp BACKSPACE  &kp RIGHT_ALT  &kp LC(SPACE)
+&trans  &kp D      &kp E              &kp U     &kp COMMA  &kp H      &kp S      &kp Y          &kp R          &kp B
+&kp Z   &kp J      &kp I              &kp A     &kp O      &kp K      &kp N      &kp T          &kp W          &kp P
+&kp Q   &kp X      &kp C              &kp V     &kp COMMA  &kp G      &kp M      &kp F          &kp MINUS      &kp L
+&mo 1   &kp LSHFT  &kp LA(LC(SPACE))  &kp LGUI  &kp SPACE  &kp SPACE  &kp ENTER  &kp BACKSPACE  &kp RIGHT_ALT  &kp LC(SPACE)
             >;
-            
+
             // レイヤー0：スクロール
+
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
 
         layer_1 {
             display-name = "Edit";
             bindings = <
-&bt BT_SEL 0  &bt BT_CLR_ALL  &kp LBKT          &kp RBKT           &kp LS(LG(N4))  &kp TAB    &kp N7        &kp N8         &kp N9        &kp N0
-&bt BT_SEL 1  &bt BT_SEL 2    &kp LPAR          &kp RPAR           &kp SLASH       &kp EQUAL  &kp N4        &kp N5         &kp N6        &kp AT
-&trans        &trans          &trans            &kp PERCENT        &kp LC(SPACE)   &kp MINUS  &kp N1        &kp N2         &lt3 1 N3     &kp PERIOD
-&trans        &kp LSHFT       &trans            &trans             &kp SPACE       &kp SPACE  &kp RET       &kp BACKSPACE  &trans        &kp LC(SPACE)
+&trans        &bt BT_CLR_ALL  &kp LBKT  &kp RBKT     &kp LS(LG(N4))  &kp TAB    &kp N7   &kp N8         &kp N9        &kp N0
+&bt BT_SEL 0  &bt BT_SEL 2    &kp LPAR  &kp RPAR     &kp SLASH       &kp EQUAL  &kp N4   &kp N5         &kp N6        &kp AT
+&bt BT_SEL 1  &trans          &trans    &kp PERCENT  &kp LC(SPACE)   &kp MINUS  &kp N1   &kp N2         &kp NUMBER_3  &kp PERIOD
+&trans        &kp LSHFT       &trans    &trans       &kp SPACE       &kp SPACE  &kp RET  &kp BACKSPACE  &trans        &kp LC(SPACE)
             >;
 
             // レイヤー1：10フレーム移動（Shift + 左右矢印）
+
             sensor-bindings = <&inc_dec_kp LS(RIGHT) LS(LEFT)>;
         };
     };
