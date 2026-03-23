@@ -1,27 +1,11 @@
 #include "k_grid.dtsi"
 
-&default_transform {
-    col-offset = <5>;
-};
-
-/* 右手側のビルド時に「left_encoderがない」と言われないための定義 */
-/ {
-    left_encoder: encoder {
-        compatible = "alps,ec11";
-        label = "LEFT_ENCODER";
-        /* 右手側ビルド用のダミー設定（実際には左手のピンが使われます） */
-        a-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        steps = <80>;
-    };
-};
-
 &kscan0 {
     col-gpios
-        = <&xiao_d 8 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+        = <&xiao_d 4 GPIO_ACTIVE_HIGH>
         , <&xiao_d 5 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 4 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 8 GPIO_ACTIVE_HIGH>
         ;
 };
