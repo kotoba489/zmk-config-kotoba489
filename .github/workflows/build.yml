@@ -40,8 +40,35 @@ jobs:
           west build -s zmk/app -b xiao_ble -- -DSHIELD=kgrid40 -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
           cp build/zephyr/zmk.uf2 kgrid40.uf2
 
-      # 2. kgrid20 Left (分割型・親機)
-      - name: Build kgrid20 Left
+      # 2. k_grid Left (分割型・左)
+      - name: Build k_grid Left
         run: |
           rm -rf build
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=kgrid20_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          west build -s zmk/app -b xiao_ble -- -DSHIELD=k_grid_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          cp build/zephyr/zmk.uf2 k_grid_left.uf2
+
+      # 3. k_grid Right (分割型・右)
+      - name: Build k_grid Right
+        run: |
+          rm -rf build
+          west build -s zmk/app -b xiao_ble -- -DSHIELD=k_grid_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          cp build/zephyr/zmk.uf2 k_grid_right.uf2
+
+      # 4. Settings Reset
+      - name: Build Settings Reset
+        run: |
+          rm -rf build
+          west build -s zmk/app -b xiao_ble -- -DSHIELD=settings_reset -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+          cp build/zephyr/zmk.uf2 settings_reset.uf2
+
+      # 全成果物をひとつの Artifact に集約
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kgrid_firmwares
+          path: |
+            kgrid40.uf2
+            k_grid_left.uf2
+            k_grid_right.uf2
+            settings_reset.uf2
+          compression-level: 0
