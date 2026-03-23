@@ -23,8 +23,9 @@
             , <&xiao_d 4 GPIO_ACTIVE_HIGH>
             ;
     };
+};
 
-    &default_transform {
-        col-offset = <5>;
-    };
+/* ノードの外側で参照を記述します */
+&default_transform {
+    col-offset = <5>;
 };
