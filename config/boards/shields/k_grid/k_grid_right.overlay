@@ -1,5 +1,9 @@
-#include "kgrid20.dtsi"
+#include "k_grid.dtsi"
 
 &default_transform {
-    col-offset = <5>; /* 右側は5列目から開始 */
+    col-offset = <5>;
+};
+
+&kscan0 {
+    diode-direction = "row2col";
 };
