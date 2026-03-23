@@ -1,66 +1,24 @@
-name: Build kgrid20 Split
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
 
-on: [push, pull_request, workflow_dispatch]
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <10>;
+        rows = <4>;
+        map = <
+            0 1 2 3 4   5 6 7 8 9
+            10 11 12 13 14  15 16 17 18 19
+            20 21 22 23 24  25 26 27 28 29
+            30 31 32 33 34  35 36 37 38 39
+        >;
+    };
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    container:
-      image: zmkfirmware/zmk-build-arm:stable
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Cache west modules
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-zephyr-modules
-        with:
-          path: |
-            modules/
-            tools/
-            zephyr/
-            bootloader/
-            zmk/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('config/west.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-
-      - name: West Init
-        run: west init -l config
-      - name: West Update
-        run: west update
-      - name: West Zephyr export
-        run: west zephyr-export
-
-      # 1. k_grid Left (分割型・左)
-      - name: Build k_grid Left
-        run: |
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=k_grid_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-          cp build/zephyr/zmk.uf2 k_grid_left.uf2
-
-      # 2. k_grid Right (分割型・右)
-      - name: Build k_grid Right
-        run: |
-          rm -rf build
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=k_grid_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-          cp build/zephyr/zmk.uf2 k_grid_right.uf2
-
-      # 3. Settings Reset
-      - name: Build Settings Reset
-        run: |
-          rm -rf build
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=settings_reset -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-          cp build/zephyr/zmk.uf2 settings_reset.uf2
-
-      # 成果物をアップロード
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: kgrid20_split_firmware
-          path: |
-            k_grid_left.uf2
-            k_grid_right.uf2
-            settings_reset.uf2
-          compression-level: 0
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        row-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        col-gpios = <&xiao_d 1 GPIO_ACTIVE_HIGH>;
+    };
+};
