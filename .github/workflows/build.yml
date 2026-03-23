@@ -1,66 +1,15 @@
-name: Build kgrid20
+#include "k_grid.dtsi"
 
-on: [push, pull_request, workflow_dispatch]
+&default_transform {
+    col-offset = <5>;
+};
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    container:
-      image: zmkfirmware/zmk-build-arm:3.5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Cache west modules
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-zephyr-modules
-        with:
-          path: |
-            modules/
-            tools/
-            zephyr/
-            bootloader/
-            zmk/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('config/west.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: West Init
-        run: west init -l config
-      - name: West Update
-        run: west update
-      - name: West Zephyr export
-        run: west zephyr-export
-
-      # 1. kgrid20 Left のビルド
-      - name: West Build (kgrid20 Left)
-        run: |
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=kgrid20_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-          cp build/zephyr/zmk.uf2 kgrid20_left.uf2
-
-      # 2. kgrid20 Right のビルド
-      - name: West Build (kgrid20 Right)
-        run: |
-          rm -rf build
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=kgrid20_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-          cp build/zephyr/zmk.uf2 kgrid20_right.uf2
-
-      # 3. Settings Resetのビルド (任意)
-      - name: West Build (Settings Reset)
-        run: |
-          rm -rf build
-          west build -s zmk/app -b xiao_ble -- -DSHIELD=settings_reset -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-          cp build/zephyr/zmk.uf2 settings_reset.uf2
-
-      # 成果物のアップロード
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: kgrid20_firmware
-          path: |
-            kgrid20_left.uf2
-            kgrid20_right.uf2
-            settings_reset.uf2
+&kscan0 {
+    col-gpios
+        = <&xiao_d 8 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 5 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 4 GPIO_ACTIVE_HIGH>
+        ;
+};
