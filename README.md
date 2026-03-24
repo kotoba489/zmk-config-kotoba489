@@ -1,8 +1,5 @@
 <img src="https://github.com/user-attachments/assets/8d785153-dff7-4dc9-a56a-ffe95a8e65d5" width="65%">
 
-
-<img src="https://github.com/user-attachments/assets/75219e2f-3976-46d7-83a5-a35a6d0d94ad" width="70%">
-
 # ⌨️ 自作キーボード「k_grid」設定状況まとめ
 
 ## 🛠️ Current Configuration (2026-03-23)
