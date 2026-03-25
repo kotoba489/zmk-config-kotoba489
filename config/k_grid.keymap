@@ -31,8 +31,8 @@
             bindings = <
 &to 0         &bt BT_CLR_ALL  &kp LBKT           &kp RBKT      &kp LS(LG(N4))  &kp TAB    &kp N7   &kp N8         &kp N9        &kp N0
 &bt BT_SEL 0  &bt BT_SEL 1    &kp LPAR           &kp RPAR      &kp SLASH       &kp EQUAL  &kp N4   &kp N5         &kp N6        &kp AT
-&trans        &trans          &trans             &kp PERCENT   &kp LC(SPACE)   &kp MINUS  &kp N1   &kp N2         &kp NUMBER_3  &kp PERIOD
-&trans        &kp LSHFT       &kp LA(LC(SPACE))  &kp LEFT_GUI  &kp SPACE       &kp SPACE  &kp RET  &kp BACKSPACE  &trans        &kp LC(SPACE)
+&none         &none           &none              &kp PERCENT   &kp LC(SPACE)   &kp MINUS  &kp N1   &kp N2         &kp NUMBER_3  &kp PERIOD
+&none         &kp LSHFT       &kp LA(LC(SPACE))  &kp LEFT_GUI  &kp SPACE       &kp SPACE  &kp RET  &kp BACKSPACE  &none         &kp LC(SPACE)
             >;
         };
     };
