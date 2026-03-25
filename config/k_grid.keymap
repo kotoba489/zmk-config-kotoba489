@@ -29,10 +29,10 @@
         layer_1 {
             display-name = "Edit";
             bindings = <
-&to 0         &bt BT_CLR_ALL  &kp LBKT           &kp RBKT      &kp LS(LG(N4))  &kp TAB    &kp N7   &kp N8         &kp N9        &kp N0
-&bt BT_SEL 0  &bt BT_SEL 1    &kp LPAR           &kp RPAR      &kp SLASH       &kp EQUAL  &kp N4   &kp N5         &kp N6        &kp AT
-&bootloader   &trans          &trans    &kp PRCNT  &kp LC(SPC)     &kp MINUS  &kp N1   &kp N2    &kp N3  &bootloader
-&trans        &kp LSHFT       &kp LA(LC(SPACE))  &kp LEFT_GUI  &kp SPACE       &kp SPACE  &kp RET  &kp BACKSPACE  &trans        &kp LC(SPACE)
+&to 0         &bt BT_CLR_ALL  &kp LBKT           &kp RBKT      &kp LS(LG(N4))  &kp TAB    &kp N7   &kp N8         &kp N9  &kp N0
+&bt BT_SEL 0  &bt BT_SEL 1    &kp LPAR           &kp RPAR      &kp SLASH       &kp EQUAL  &kp N4   &kp N5         &kp N6  &kp AT
+&bootloader   &none           &none              &kp PRCNT     &kp LC(SPC)     &kp MINUS  &kp N1   &kp N2         &kp N3  &bootloader
+&none         &kp LSHFT       &kp LA(LC(SPACE))  &kp LEFT_GUI  &kp SPACE       &kp SPACE  &kp RET  &kp BACKSPACE  &none   &kp LC(SPACE)
             >;
         };
     };
