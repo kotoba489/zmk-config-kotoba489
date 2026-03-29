@@ -1,6 +1,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
 
 / {
     behaviors {
@@ -19,7 +20,7 @@
         default_layer {
             display-name = "Base";
             bindings = <
-&to 1  &kp D      &kp E              &kp U     &kp COMMA  &kp H      &kp S      &kp Y          &kp R          &kp B
+&mo 2  &kp D      &kp E              &kp U     &kp COMMA  &kp H      &kp S      &kp Y          &kp R          &kp B
 &kp Z  &kp J      &kp I              &kp A     &kp O      &kp K      &kp N      &kp T          &kp W          &kp P
 &kp Q  &kp X      &kp C              &kp V     &kp COMMA  &kp G      &kp M      &kp F          &kp MINUS      &kp L
 &mo 1  &kp LSHFT  &kp LA(LC(SPACE))  &kp LGUI  &kp SPACE  &kp SPACE  &kp ENTER  &kp BACKSPACE  &kp RIGHT_ALT  &kp LC(SPACE)
@@ -33,6 +34,15 @@
 &bt BT_SEL 0  &bt BT_SEL 1    &kp LPAR           &kp RPAR      &kp SLASH       &kp EQUAL  &kp N4   &kp N5         &kp N6        &kp AT
 &none         &none           &none              &kp PERCENT   &kp LC(SPACE)   &kp MINUS  &kp N1   &kp N2         &kp NUMBER_3  &kp PERIOD
 &none         &kp LSHFT       &kp LA(LC(SPACE))  &kp LEFT_GUI  &kp SPACE       &kp SPACE  &kp RET  &kp BACKSPACE  &none         &kp LC(SPACE)
+            >;
+        };
+
+        layer_2 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans          &trans  &trans          &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans          &trans  &trans          &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &msc SCRL_UP    &trans  &trans          &mmv MOVE_UP    &mkp LCLK
+&trans  &trans  &trans  &trans  &trans  &msc SCRL_DOWN  &trans  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT
             >;
         };
     };
